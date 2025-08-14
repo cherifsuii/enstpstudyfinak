@@ -15,40 +15,39 @@ interface EngineeringSubjectPageProps {
 }
 
 export default function EngineeringSubjectPage({ params }: EngineeringSubjectPageProps) {
-  const department = engineeringCycle.departments.find(
-    (d) => d.slug === params.departmentSlug
-  );
-  const year = department?.years.find(
-    (y) => slugify(y.name) === params.yearSlug
-  );
-  const semester = year?.semesters.find(
-    (s) => slugify(s.name) === params.semesterSlug
-  );
+  // const department = engineeringCycle.departments.find(
+  //   (d) => d.slug === params.departmentSlug
+  // );
+  // const year = department?.years.find(
+  //   (y) => slugify(y.name) === params.yearSlug
+  // );
+  // const semester = year?.semesters.find(
+  //   (s) => slugify(s.name) === params.semesterSlug
+  // );
 
-  let subject: Subject | undefined;
-  if(semester) {
-    subject = semester.subjects.find(
-      (s) => slugify(s.name) === params.subjectSlug
-    );
-    if(!subject) {
-      for(const optionGroup of semester.options || []) {
-        subject = optionGroup.subjects.find(
-          (s) => slugify(s.name) === params.subjectSlug
-        );
-        if(subject) break;
-      }
-    }
-  }
+  // let subject: Subject | undefined;
+  // if(semester) {
+  //   subject = semester.subjects.find(
+  //     (s) => slugify(s.name) === params.subjectSlug
+  //   );
+  //   if(!subject) {
+  //     for(const optionGroup of semester.options || []) {
+  //       subject = optionGroup.subjects.find(
+  //         (s) => slugify(s.name) === params.subjectSlug
+  //       );
+  //       if(subject) break;
+  //     }
+  //   }
+  // }
 
-  if (!department || !year || !semester || !subject) {
-    notFound();
-  }
+  // if (!department || !year || !semester || !subject) {
+  //   notFound();
+  // }
 
   return (
     <div className="space-y-8">
       <Breadcrumbs />
-      <h1 className="text-4xl font-bold">{subject.name}</h1>
-      <MaterialsGrid materials={subject.materials} />
+      <h1 className="text-4xl font-bold">Subject Page</h1>
     </div>
   );
 }
