@@ -3,7 +3,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { usePathStore } from "@/hooks/use-path-store";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "@/hooks/use-toast";
 import { LifeBuoy, Search, Navigation, Star, Trash2, Mail } from "lucide-react";
 
 function ResetPathButton() {

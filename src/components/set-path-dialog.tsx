@@ -21,7 +21,7 @@ import {
 import { usePathStore } from '@/hooks/use-path-store';
 import { engineeringCycle } from '@/lib/study-data';
 import { slugify } from '@/lib/utils';
-import { toast } from '@/components/ui/use-toast';
+import { toast } from '@/hooks/use-toast';
 import { Input } from "@/components/ui/input";
 
 interface SetPathDialogProps {
