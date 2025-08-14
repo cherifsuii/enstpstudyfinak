@@ -5,7 +5,16 @@ import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { MaterialsGrid } from "@/components/materials-grid";
 import { Subject } from "@/lib/study-data";
 
-export default function EngineeringSubjectPage({ params }: { params: { departmentSlug: string, yearSlug: string, semesterSlug: string, subjectSlug: string } }) {
+interface EngineeringSubjectPageProps {
+  params: {
+    departmentSlug: string;
+    yearSlug: string;
+    semesterSlug: string;
+    subjectSlug: string;
+  };
+}
+
+export default function EngineeringSubjectPage({ params }: EngineeringSubjectPageProps) {
   const department = engineeringCycle.departments.find(
     (d) => d.slug === params.departmentSlug
   );
