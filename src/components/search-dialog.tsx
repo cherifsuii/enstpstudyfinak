@@ -13,8 +13,8 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { dibCycle, dmsCycle, preparatoryCycle } from "@/lib/study-data"
-import type { StudyMaterial, Subject, Semester, Year, Program } from "@/lib/study-data"
+import { engineeringCycle, preparatoryCycle } from "@/lib/study-data"
+import type { StudyMaterial, Subject, Semester, Year, Program, Department } from "@/lib/study-data"
 
 interface SearchResult {
   material: StudyMaterial
@@ -40,18 +40,35 @@ export function SearchDialog({ children }: SearchDialogProps) {
     if (!searchQuery.trim()) return []
 
     const allResults: SearchResult[] = []
-    const programs = [
-      { data: preparatoryCycle, cycle: "Préparatoire" },
-      { data: dibCycle, cycle: "DIB" },
-      { data: dmsCycle, cycle: "DMS" }
-    ]
 
-    programs.forEach(({ data, cycle }) => {
-      data.years.forEach((year: Year) => {
+    // Search preparatory cycle
+    preparatoryCycle.years.forEach((year: Year) => {
+      year.semesters.forEach((semester: Semester) => {
+        semester.subjects.forEach((subject: Subject) => {
+          subject.materials.forEach((material: StudyMaterial) => {
+            const searchText = `${material.title} ${subject.name} ${material.type}`.toLowerCase()
+            if (searchText.includes(searchQuery.toLowerCase())) {
+              allResults.push({
+                material,
+                subject: subject.name,
+                semester: semester.name,
+                year: year.name,
+                program: preparatoryCycle.name,
+                cycle: "Préparatoire"
+              })
+            }
+          })
+        })
+      })
+    })
+
+    // Search engineering cycle
+    engineeringCycle.departments.forEach((department: Department) => {
+      department.years.forEach((year: Year) => {
         year.semesters.forEach((semester: Semester) => {
-          semester.subjects.forEach((subject: Subject) => {
+          const allSubjects = [...semester.subjects, ...(semester.options || []).flatMap(o => o.subjects)];
+          allSubjects.forEach((subject: Subject) => {
             subject.materials.forEach((material: StudyMaterial) => {
-              // Search in material title, subject name, and material type
               const searchText = `${material.title} ${subject.name} ${material.type}`.toLowerCase()
               if (searchText.includes(searchQuery.toLowerCase())) {
                 allResults.push({
@@ -59,8 +76,8 @@ export function SearchDialog({ children }: SearchDialogProps) {
                   subject: subject.name,
                   semester: semester.name,
                   year: year.name,
-                  program: data.name,
-                  cycle
+                  program: department.name,
+                  cycle: `Ingénieur - ${department.slug.toUpperCase()}`
                 })
               }
             })

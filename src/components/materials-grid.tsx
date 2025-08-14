@@ -6,8 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { ExternalLink, BookOpen, FileText, GraduationCap, ClipboardList, FileQuestion, Archive, Download, Video, Headphones } from "lucide-react";
 import { StudyMaterial } from "@/lib/study-data";
 
-interface StudyMaterialsCardProps {
-  subject: string;
+interface MaterialsGridProps {
   materials: StudyMaterial[];
 }
 
@@ -94,62 +93,44 @@ const getTypeColor = (type: StudyMaterial['type']) => {
   }
 };
 
-export function StudyMaterialsCard({ subject, materials }: StudyMaterialsCardProps) {
+export function MaterialsGrid({ materials }: MaterialsGridProps) {
   return (
-    <Card className="w-full border-l-4 border-l-primary shadow-sm hover:shadow-md transition-shadow">
-      <CardHeader className="pb-4">
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-xl font-bold text-primary flex items-center gap-2">
-            <BookOpen className="h-5 w-5" />
-            {subject}
-          </CardTitle>
-          <Badge variant="secondary" className="text-sm">
-            {materials.length} ressource(s)
-          </Badge>
-        </div>
-        <CardDescription className="text-sm">
-          Cliquez sur n'importe quelle ressource pour y accéder directement
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-          {materials.map((material, index) => (
-            <Card 
-              key={index} 
-              className={`hover:shadow-md transition-all duration-200 hover:scale-[1.02] border ${getTypeColor(material.type)}`}
+    <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+      {materials.map((material, index) => (
+        <Card
+          key={index}
+          className={`hover:shadow-md transition-all duration-200 hover:scale-[1.02] border ${getTypeColor(material.type)}`}
+        >
+          <CardContent className="p-4">
+            <div className="flex items-start justify-between mb-3">
+              <div className="flex items-center gap-2">
+                {getMaterialIcon(material.type)}
+                <Badge variant="outline" className="text-xs font-medium">
+                  {getMaterialTypeLabel(material.type)}
+                </Badge>
+              </div>
+              <Badge
+                variant="secondary"
+                className={`text-xs font-medium border ${getLanguageColor(material.language)}`}
+              >
+                {getLanguageLabel(material.language)}
+              </Badge>
+            </div>
+            <h4 className="font-medium text-sm mb-3 line-clamp-2 text-gray-800 leading-relaxed">
+              {material.title}
+            </h4>
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full hover:bg-primary hover:text-primary-foreground transition-colors"
+              onClick={() => window.open(material.url, '_blank')}
             >
-              <CardContent className="p-4">
-                <div className="flex items-start justify-between mb-3">
-                  <div className="flex items-center gap-2">
-                    {getMaterialIcon(material.type)}
-                    <Badge variant="outline" className="text-xs font-medium">
-                      {getMaterialTypeLabel(material.type)}
-                    </Badge>
-                  </div>
-                  <Badge 
-                    variant="secondary" 
-                    className={`text-xs font-medium border ${getLanguageColor(material.language)}`}
-                  >
-                    {getLanguageLabel(material.language)}
-                  </Badge>
-                </div>
-                <h4 className="font-medium text-sm mb-3 line-clamp-2 text-gray-800 leading-relaxed">
-                  {material.title}
-                </h4>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="w-full hover:bg-primary hover:text-primary-foreground transition-colors"
-                  onClick={() => window.open(material.url, '_blank')}
-                >
-                  <ExternalLink className="h-3 w-3 mr-2" />
-                  Accéder
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
+              <ExternalLink className="h-3 w-3 mr-2" />
+              Accéder
+            </Button>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
   );
 }

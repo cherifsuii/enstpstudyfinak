@@ -9,8 +9,10 @@ import {
   Globe,
   Clock,
   BookOpen,
-  Target
+  Target,
+  LifeBuoy
 } from "lucide-react"
+import { TechnicalHelpSection } from "@/components/technical-help-section"
 
 export default function AboutPage() {
   return (
@@ -359,6 +361,8 @@ export default function AboutPage() {
           </Card>
         </div>
       </section>
+
+      <TechnicalHelpSection />
     </div>
   )
 }

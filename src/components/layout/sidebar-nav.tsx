@@ -17,6 +17,7 @@ import {
   Info
 } from "lucide-react"
 import { useState } from "react"
+import { MyPathNav } from "./my-path-nav"
 
 const navigation = [
   {
@@ -183,6 +184,7 @@ export function SidebarNav() {
       <div className="flex-1 px-3 py-2">
         <nav className="grid items-start text-sm font-medium">
           <div className="space-y-1">
+            <MyPathNav />
             {navigation.map((item) => (
               <NavItem key={item.name} item={item} />
             ))}
